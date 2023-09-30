@@ -1,4 +1,5 @@
 import jwt
+from responseCode import Response
 
 
 class CheckJWT:
@@ -8,8 +9,8 @@ class CheckJWT:
     def confirm_token(self, public_key, alg):
         try:
             decoded = jwt.decode(self.__token, public_key, algorithms=alg)
-            print("Token is correct.")
+            return Response.VALID
         except jwt.ExpiredSignatureError:
-            print("Token expired.")
+            return Response.EXPIRED
         except jwt.InvalidTokenError:
-            print("Invalid token")
+            return Response.INVALID

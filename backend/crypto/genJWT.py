@@ -2,8 +2,9 @@ import jwt
 
 
 class GenJWT:
-    def __init__(self, user_id, exp_time):
+    def __init__(self, user_id, perm, exp_time):
         self.__payload = {'id': user_id,
+                          'perm': perm,
                           'exp': exp_time}
 
     def generate_token(self, alg, private_key):
