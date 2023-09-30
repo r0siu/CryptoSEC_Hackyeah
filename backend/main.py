@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 
 app = Flask(__name__)
 
@@ -9,29 +9,46 @@ DOCUMENT_RESOURCE = '/document'
 
 # region login
 
-# TODO: this method should be accessible form authentication server
+# TODO: Mocked endpoint with no functionality whatsoever - needs implementation
 @app.route(API_VERSION_PREFIX + '/login', methods=['POST'])
 def login_user():
-    return jsonify({'message': 'ok'})
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    return jsonify({'jwt': 'header.body.suffix'})
 
 # endregion
 
 # region document
+# TODO: this is a mocked method - it need an implementation
 @app.route(API_VERSION_PREFIX + DOCUMENT_RESOURCE + '/encrypt', methods=['POST'])
 def encrypt_document():
-    return jsonify({'message': 'ok'})
+    receivedDocument = request.files['file']
+    if receivedDocument:
+        receivedDocument.save(receivedDocument.filename)
+        return send_file(receivedDocument.filename, as_attachment=True)
 
+# TODO: this is a mocked method - it needs an implementation
 @app.route(API_VERSION_PREFIX + DOCUMENT_RESOURCE + '/decrypt', methods=['POST'])
 def decrypt_document():
-    return jsonify({'message': 'ok'})
+    receivedDocument = request.files['file']
+    if receivedDocument:
+        receivedDocument.save(receivedDocument.filename)
+        return send_file(receivedDocument.filename, as_attachment=True)
 
+# TODO: this is a mocked method - it needs an implementation
 @app.route(API_VERSION_PREFIX + DOCUMENT_RESOURCE + '/sign', methods=['POST'])
 def sign_document():
-    return jsonify({'message': 'ok'})
+    receivedDocument = request.files['file']
+    if receivedDocument:
+        receivedDocument.save(receivedDocument.filename)
+        return send_file(receivedDocument.filename, as_attachment=True)
 
+# TODO: this is a mocked method - it needs an implementation
 @app.route(API_VERSION_PREFIX + DOCUMENT_RESOURCE + '/verify', methods=['POST'])
 def verify_document():
-    return jsonify({'message': 'ok'})
+    return jsonify({'is_valid': True})
 
 
 # endregion
