@@ -7,7 +7,6 @@
   <meta name="description" content="">
   <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
   <meta name="generator" content="Hugo 0.118.2">
-  <title>Sidebars · Bootstrap v5.3</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
 
@@ -300,36 +299,77 @@ buttons.forEach(button => {
     button.addEventListener('click', handleClick);
 });
 
-    function sendPKCSRequest() {
-        const form = document.getElementById('pkcsForm');
-        const formData = new FormData(form);
+function sendPKCSRequest() {
+    const form = document.getElementById('pkcsForm');
+    const formData = new FormData(form);
 
-        // Convert form data to JSON
-        const jsonObject = {};
-        formData.forEach((value, key) => {
-            jsonObject[key] = value;
-        });
-
-        // const apiUrl = 'http://127.0.0.1:5000/test';
-        const apiUrl = 'https://httpbin.org/post'
-        // Send a POST request to the REST API
-        fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(jsonObject),
-        })
-            .then(response => response.json())
-            .then(data => {
-                // Display the API response
-                document.getElementById('response').innerHTML = JSON.stringify(data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('response').innerHTML = 'An error occurred.';
-            })
+    // Add a file to the form data (assuming you have an input with type="file" in your form)
+    const fileInput = document.getElementById('fileInput');
+    if (fileInput.files.length > 0) {
+        formData.append('file', fileInput.files[0]);
     }
+
+    const apiUrl = 'https://httpbin.org/post';
+
+    // User authentication data
+    // const user = document.getElementById('user').value;
+    // const secret = document.getElementById('secret').value;
+    const user = 'dupa';
+    const secer = 'jasia';
+    // Generate a JWT token with user credentials
+    // const token = generateJWT(user, secret);
+    const token = 'tokenisko';
+
+    // Construct headers with JWT token
+    const headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + token);
+
+    // Send a POST request to the REST API with form data and JWT token in headers
+    fetch(apiUrl, {
+        method: 'POST',
+        body: formData,
+        headers: headers,
+    })
+    .then(response => {
+        // Check if the response contains a file attachment
+        const contentDisposition = response.headers.get('Content-Disposition');
+        if (contentDisposition && contentDisposition.indexOf('file') !== -1) {
+            // Extract the filename from the Content-Disposition header
+            const filename = contentDisposition.split('filename=')[1].trim();
+
+            // Create a blob from the response data
+            return response.blob().then(blob => {
+                // Create a URL for the blob
+                const blobUrl = window.URL.createObjectURL(blob);
+
+                // Create a temporary <a> element to trigger the download
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = filename || 'downloaded_file';
+                a.style.display = 'none';
+                document.body.appendChild(a);
+
+                // Trigger the download
+                a.click();
+
+                // Clean up
+                window.URL.revokeObjectURL(blobUrl);
+                document.body.removeChild(a);
+            });
+        } else {
+            // Handle other types of responses here
+            return response.json();
+        }
+    })
+    .then(data => {
+        // Display the API response or handle it as needed
+        document.getElementById('response').innerHTML = JSON.stringify(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('response').innerHTML = 'An error occurred.';
+    });
+}
 </script>
 <script src="js/sidebars.js"></script></body>
 </html>

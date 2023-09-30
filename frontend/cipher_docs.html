@@ -3,15 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funkcjonalność 1</title>
+    <title>Szyfrowanie i deszyfrowanie dokumentów</title>
 </head>
 <body>
-<h1>Option 1 - PKCS Form</h1>
-<form id="pkcsForm">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br><br>
+<h1>Funkcjonalność 1</h1>
 
-    <button type="button" onclick="sendPKCSRequest()">Submit</button>
+<h2>Funkcjonalność szyfrowania i deszyfrowania dokumentów z wykorzystaniem kryptografii symetrycznej (algorytm blokowy i strumieniowy) i asymetrycznej</h2>
+<form id="pkcsForm">
+    <label for="name">Name:</label><input type="text" id="name" name="name" required><br><br>
+    <label for="name">Plik do zaszyfrowania/deszyfrowania:</label>
+    <br><input type="file" id="fileInput" name="file"><br><br>
+        <label>Wybierz tryb pracy:</label><br>
+        <input type="radio" id="cipher" name="choice" value="cipher" checked required>
+        <label for="cipher">Szyfrowanie</label>
+
+        <input type="radio" id="decipher" name="choice" value="decipher">
+        <label for="decipher">Deszyfrowanie</label><br>
+        <label>Wybierz tryb szyfrowania:</label>
+        <select id="cipher_type" name="cipher">
+            <option value="AES">AES</option>
+            <option value="DES">DES</option>
+            <option value="RSA">RSA</option>
+            <option value="TripleDES">TripleDES</option>
+            <!-- Add more cipher options as needed -->
+        </select><br><br>
+    <button type="button" onclick="sendPKCSRequest()">Wyślij</button>
 </form>
 
 <div id="response"></div>
