@@ -8,7 +8,7 @@ def index(request):
     if request.method == 'POST':
         form = NameForm(request.POST)
         if form.is_valid():
-            # form.save()
+            form.save()
             return redirect('index')
     else:
         form = NameForm()
