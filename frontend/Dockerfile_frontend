@@ -1,5 +1,5 @@
 # to build docker image before usage: `docker -t nginx-frontend build -f Dockerfile_frontend .`
-# usage: `docker run -d -p 192.168.1.112:20112:20112 custom-nginx`
+# usage: `docker run -d -p 192.168.1.112:20112:20112 nginx-frontend`
 
 FROM nginx
 
