@@ -94,6 +94,10 @@
     .bd-mode-toggle .dropdown-menu .active .bi {
       display: block !important;
     }
+
+    .nav-link:hover {
+      background-color: #007BFF;
+    }
   </style>
 
 
@@ -185,44 +189,44 @@
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
+      <li id="menu-home-button" class="nav-item">
         <a href="#" class="nav-link active" aria-current="page" id="base">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
           Home
         </a>
       </li>
-      <li>
+      <li id="menu-ciphering-button">
         <a href="#" class="nav-link text-white" id="cipher_docs" data-toggle="nav-link active">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
           Szyfrowanie Dokumentów
         </a>
       </li>
-      <li>
+      <li id="menu-signing-button">
 
         <a href="#" class="nav-link text-white" id="sign_docs" data-toggle="nav-link active">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
           Podpis Dokumentów
         </a>
       </li>
-      <li>
+      <li id="menu-verification-button">
         <a href="#" class="nav-link text-white" id="vv_docs" data-toggle="tab">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
           Weryfikacja i Walidacja Dokumentów
         </a>
       </li>
-      <li>
+      <li id="menu-generate-button">
         <a href="#" class="nav-link text-white" id="cert_gen" data-toggle="tab">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
           Generuj klucze
         </a>
       </li>
-      <li>
+      <li id="menu-physical-button">
         <a href="#" class="nav-link text-white" id="pkcs11" data-toggle="tab">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
           Fizyczny sprzęt PKCS#11
         </a>
       </li>
-      <li>
+      <li id="menu-pcks-button">
         <a href="#" class="nav-link text-white" id="pkcs12" data-toggle="tab">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
           Magazyny klucze PKCS#12 & JKS
@@ -277,6 +281,26 @@
       loadPageContent(pageName);
     });
   });
+
+  const buttons = document.querySelectorAll('.nav-link');
+
+function resetMenuColors() {
+    buttons.forEach(button => {
+        button.classList.remove('active');
+        button.classList.add('text-white');
+    });
+}
+
+function handleClick(event) {
+    resetMenuColors();
+    event.target.classList.add('active');
+}
+
+buttons.forEach(button => {
+    button.addEventListener('click', handleClick);
+});
+
+
 </script>
 <script src="js/sidebars.js"></script></body>
 </html>
