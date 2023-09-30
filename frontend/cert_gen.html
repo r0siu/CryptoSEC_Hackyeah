@@ -1,39 +1,20 @@
-<form id="apiForm">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Option 1 - PKCS Form</title>
+</head>
+<body>
+<h1>Option 1 - PKCS Form</h1>
+<form id="pkcsForm">
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br>
+    <input type="text" id="name" name="name" required><br><br>
 
-<!--    <label for="email">Email:</label>-->
-<!--    <input type="email" id="email" name="email" required><br>-->
-
-<!--    <label for="message">Message:</label>-->
-<!--    <textarea id="message" name="message" rows="4" required></textarea><br>-->
-
-    <button type="submit">Submit</button>
+    <button type="button" onclick="sendPKCSRequest()">Submit</button>
 </form>
 
-<script>
-    // Attach an event listener to the form
-    $("#myForm").submit(function (event) {
-        // Prevent the default form submission behavior
-        event.preventDefault();
+<div id="response"></div>
 
-        // Get the form data
-        var formData = $(this).serialize();
-        var data;
-
-        // Use AJAX to submit the form data
-        $.ajax({
-            type: "POST",
-            url: "https://httpbin.org/", // Replace with your actual endpoint
-            data: formData,
-            success: function (response) {
-                // Update the content container with the response
-                $data = response;
-            },
-            error: function (error) {
-                // Handle errors here
-                console.error(error);
-            }
-        });
-    });
-</script>
+</body>
+</html>

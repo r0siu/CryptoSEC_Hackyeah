@@ -300,7 +300,36 @@ buttons.forEach(button => {
     button.addEventListener('click', handleClick);
 });
 
+    function sendPKCSRequest() {
+        const form = document.getElementById('pkcsForm');
+        const formData = new FormData(form);
 
+        // Convert form data to JSON
+        const jsonObject = {};
+        formData.forEach((value, key) => {
+            jsonObject[key] = value;
+        });
+
+        // const apiUrl = 'http://127.0.0.1:5000/test';
+        const apiUrl = 'https://httpbin.org/post'
+        // Send a POST request to the REST API
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonObject),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Display the API response
+                document.getElementById('response').innerHTML = JSON.stringify(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('response').innerHTML = 'An error occurred.';
+            })
+    }
 </script>
 <script src="js/sidebars.js"></script></body>
 </html>
