@@ -1,0 +1,18 @@
+<!-- simpleapp/templates/simpleapp/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple GUI App</title>
+</head>
+<body>
+    <h1>Add a Name</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Names</h2>
+
+</body>
+</html>
