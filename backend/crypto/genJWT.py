@@ -8,5 +8,6 @@ class GenJWT:
                           'exp': exp_time}
 
     def generate_token(self, alg, private_key):
-        token = jwt.encode(self.__payload, private_key, algorithm=alg)
-        return token
+        gen_token = jwt.encode(self.__payload, private_key, algorithm=alg)
+        return gen_token
+
