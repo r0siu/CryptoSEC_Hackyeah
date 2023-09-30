@@ -4,6 +4,10 @@ services:
     image: frontend-image
     container_name: frontend
 
+  backend:
+    image: backend-image
+    container_name: backend
+
   nginx:
     image: nginx-image
     container_name: nginx
@@ -11,4 +15,5 @@ services:
       - "20112:20112"
     depends_on:
       - frontend
+      - backend
 
