@@ -1,0 +1,14 @@
+version: '3'
+services:
+  frontend:
+    image: frontend-image
+    container_name: frontend
+
+  nginx:
+    image: nginx-image
+    container_name: nginx
+    ports:
+      - "20112:20112"
+    depends_on:
+      - frontend
+
