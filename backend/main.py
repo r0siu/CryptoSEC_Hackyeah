@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 API_VERSION_PREFIX = '/api/v1'
 
@@ -21,13 +23,16 @@ def login_user():
 def encrypt_document():
     return jsonify({'message': 'ok'})
 
+
 @app.route(API_VERSION_PREFIX + DOCUMENT_RESOURCE + '/decrypt', methods=['POST'])
 def decrypt_document():
     return jsonify({'message': 'ok'})
 
+
 @app.route(API_VERSION_PREFIX + DOCUMENT_RESOURCE + '/sign', methods=['POST'])
 def sign_document():
     return jsonify({'message': 'ok'})
+
 
 @app.route(API_VERSION_PREFIX + DOCUMENT_RESOURCE + '/verify', methods=['POST'])
 def verify_document():

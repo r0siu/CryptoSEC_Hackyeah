@@ -309,7 +309,8 @@ function sendPKCSRequest() {
         formData.append('file', fileInput.files[0]);
     }
 
-    const apiUrl = 'https://httpbin.org/post';
+    const apiUrl = 'http://192.168.7.105:63343/api/v1/document/encrypt';
+    // const apiUrl = 'https://httpbin.org/post';
 
     // User authentication data
     // const user = document.getElementById('user').value;
