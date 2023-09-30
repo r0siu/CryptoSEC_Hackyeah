@@ -10,6 +10,6 @@ RUN pip install -r $APP_HOME/requirements.txt
 
 RUN apk add curl
 
-EXPOSE 8000
+EXPOSE 5000
 
-ENTRYPOINT ["python3", "/root/src/manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT ["python3", "/root/src/main.py"]
