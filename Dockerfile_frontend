@@ -1,7 +1,0 @@
-# usage: docker run -it -p 8000:80 <image_name>
-# to find image_name, check `docker images`
-# to build docker image before usage: `docker build -f Dockerfile_frontend .`
-
-FROM nginx
-
-COPY frontend/index.html /usr/share/nginx/html/
