@@ -1,9 +1,9 @@
-Przed pierwszym uruchomieniem:
+# Przed pierwszym uruchomieniem:
 
-manage.py makemigrate
+```manage.py makemigrate```
 
-manage.py migrate
+```manage.py migrate```
 
-Start aplikacji z konsoli:
+# Start aplikacji z konsoli:
 
-manage.py runserver 8000
+```manage.py runserver 8000```
