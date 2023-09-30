@@ -22,3 +22,6 @@ class AssymetricInterface:
 
     def verify_signature(self, signature, data):
         """verify signature, return verification status"""
+
+    def save_private_key_to_file(self):
+        """save private key to .pem file"""
