@@ -1,15 +1,7 @@
-FROM i386/python:3.10.6-alpine
+# usage: docker run -it -p 8000:80 <image_name>
+# to find image_name, check `docker images`
+# to build docker image before usage: `docker build -f Dockerfile_frontend .`
 
-ENV APP_HOME="/root/src"
+FROM nginx
 
-RUN mkdir $APP_HOME
-COPY . $APP_HOME/
-RUN ls $APP_HOME
-
-RUN pip install -r $APP_HOME/requirements.txt
-
-RUN apk add curl
-
-EXPOSE 8000
-
-ENTRYPOINT ["python3", "/root/src/manage.py", "runserver", "0.0.0.0:8000"]
+COPY frontend/index.html /usr/share/nginx/html/
