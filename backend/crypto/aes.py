@@ -1,17 +1,16 @@
-from symmetric_interface import SymmetricInterface
+from .symmetric_interface import SymmetricInterface
 import os
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
-from symmetric_interface import AesMode
-from Cryptodome.Cipher import AES
-from Cryptodome.Util.Padding import pad
-from Cryptodome.Util.Padding import unpad
-from Cryptodome.Util import Counter
+from .symmetric_interface import AesMode
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad
+from Crypto.Util.Padding import unpad
+from Crypto.Util import Counter
 
 class Aes(SymmetricInterface):
-    def __init__(self, mode):
+    def __init__(self):
         self.key = None
-        self.mode = mode
 
     def generate_aes_key(self):
         kdf = PBKDF2HMAC(
@@ -27,24 +26,24 @@ class Aes(SymmetricInterface):
             print("AES key derivation failure:", e)
             return False
 
-    def encrypt(self, data):
-        if self.mode == AesMode.GCM:
+    def encrypt(self, data, mode):
+        if mode == 'gcm':
             cipher = AES.new(self.key, AES.MODE_GCM)
             ciphertext, tag = cipher.encrypt_and_digest(data)
             IV = cipher.nonce
             return ciphertext,  IV, tag
-        elif self.mode == AesMode.CBC:
+        elif mode == 'cbc':
             cipher = AES.new(self.key, AES.MODE_CBC)
             padded_data = pad(data, AES.block_size)
             ciphertext = cipher.encrypt(padded_data)
             IV = cipher.IV
             return ciphertext, IV
-        elif self.mode == AesMode.ECB:
+        elif mode == 'ecb':
             cipher = AES.new(self.key, AES.MODE_ECB)
             padded_data = pad(data, AES.block_size)
             ciphertext = cipher.encrypt(padded_data)
             return ciphertext
-        elif self.mode == AesMode.CTR:
+        elif mode == 'ctr':
             iv = b'InitializationVt'
             ctr = Counter.new(128, initial_value=int.from_bytes(iv, byteorder='big'))
             cipher = AES.new(self.key, AES.MODE_CTR, counter=ctr)
@@ -53,10 +52,10 @@ class Aes(SymmetricInterface):
             IV = cipher.nonce
             return ciphertext, ctr
 
-    def decrypt(self, ciphertext, IV = None, tag=None):
+    def decrypt(self, ciphertext, mode, IV = None, tag=None ):
         if self.key == 0:
             return 0
-        if self.mode == AesMode.GCM:
+        if mode == 'gcm':
             cipher = AES.new(self.key, AES.MODE_GCM, IV)
             try:
                 plaintext = cipher.decrypt_and_verify(ciphertext, tag)
@@ -64,7 +63,7 @@ class Aes(SymmetricInterface):
             except Exception as e:
                 print("\nAES decode error ", e)
                 return None
-        elif self.mode == AesMode.CBC:
+        elif mode == 'cbc':
             cipher = AES.new(self.key, AES.MODE_CBC, IV)
             try:
                 plaintext = cipher.decrypt(ciphertext)
@@ -73,7 +72,7 @@ class Aes(SymmetricInterface):
             except Exception as e:
                 print("\nAES decode error ", e)
                 return None
-        elif self.mode == AesMode.CTR:
+        elif mode == 'ctr':
             cipher = AES.new(self.key, AES.MODE_CTR, counter=IV)
             try:
                 plaintext = cipher.decrypt(ciphertext)
@@ -81,7 +80,7 @@ class Aes(SymmetricInterface):
             except Exception as e:
                 print("\nAES decode error ", e)
                 return None
-        elif self.mode == AesMode.ECB:
+        elif mode == 'ecb':
             cipher = AES.new(self.key, AES.MODE_ECB)
             try:
                 plaintext = cipher.decrypt(ciphertext)
