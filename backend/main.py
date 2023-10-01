@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
+from backend.auth.AuthenticationService import AuthenticationService
+
+
 app = Flask(__name__)
 CORS(app, expose_headers=["Content-Disposition"])
 
@@ -8,6 +11,7 @@ API_VERSION_PREFIX = '/api/v1'
 
 DOCUMENT_RESOURCE = '/document'
 
+authService = AuthenticationService()
 
 # region login
 
@@ -17,8 +21,9 @@ def login_user():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
+    jwt = authService.authenticate_user(username, password)
 
-    return jsonify({'jwt': 'header.body.suffix'})
+    return jsonify({'auth': jwt})
 
 # endregion
 

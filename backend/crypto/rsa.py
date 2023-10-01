@@ -5,7 +5,7 @@ from cryptography.exceptions import InvalidSignature
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.backends import default_backend
 import random, os
-from assymetric_interface import AssymetricInterface
+from .assymetric_interface import AssymetricInterface
 
 from cryptography.hazmat.primitives import serialization as crypto_serialization
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
@@ -33,12 +33,12 @@ class Rsa(AssymetricInterface):
             public_exponent=65537,
             key_size=2048
         )
-        with open('rsa/private_key_client.pem', 'w+b') as key_file:
-            key_file.write(rsa_private_key.private_bytes(
-                encoding=serialization.Encoding.PEM,
-                format=serialization.PrivateFormat.PKCS8,
-                encryption_algorithm=serialization.NoEncryption()
-            ))
+        # with open('./rsa/private_key_client.pem', 'w+b') as key_file:
+        #     key_file.write(rsa_private_key.private_bytes(
+        #         encoding=serialization.Encoding.PEM,
+        #         format=serialization.PrivateFormat.PKCS8,
+        #         encryption_algorithm=serialization.NoEncryption()
+        #     ))
 
         self.rsa_private_key = rsa_private_key
         self.rsa_public_key = self.rsa_private_key.public_key()
