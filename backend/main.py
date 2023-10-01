@@ -18,6 +18,7 @@ authService = AuthenticationService()
 aes = Aes()
 aes.generate_aes_key()
 
+
 # region login
 
 # TODO: returns only generated JWT, we need to implement a repository to check username/password and pass scopes to JWT
@@ -30,10 +31,11 @@ def login_user():
 
     return jsonify({'auth': jwt})
 
+
 # endregion
 
 # region document
-# TODO: this is a mocked method - it need an implementation
+
 @app.route(API_VERSION_PREFIX + DOCUMENT_RESOURCE + '/encrypt', methods=['POST'])
 def encrypt_document():
     received_document = request.files['file']
@@ -41,19 +43,31 @@ def encrypt_document():
     if received_document:
         binary_data = received_document.read()
         encrypted_document = aes.encrypt(binary_data, mode)
-        response = send_file(io.BytesIO(encrypted_document), as_attachment=True, download_name=received_document.filename + '_encrypted_' + mode, mimetype='application/octet-stream')
+        response = send_file(io.BytesIO(encrypted_document['ciphertext']), as_attachment=True,
+                             download_name=received_document.filename + '_encrypted',
+                             mimetype='application/octet-stream')
         response.headers['mode'] = mode
+        #  {'ciphertext': ciphertext, 'iv': IV, 'tag': tag, 'ctr': None}
+        response.headers['iv'] = encrypted_document['iv']
+        response.headers['tag'] = encrypted_document['tag']
+        response.headers['ctr'] = encrypted_document['ctr']
         return response
 
 
 @app.route(API_VERSION_PREFIX + DOCUMENT_RESOURCE + '/decrypt', methods=['POST'])
 def decrypt_document():
     received_document = request.files['file']
+    # iv = request.headers['iv']
+    # tag = request.headers['tag']
+    # ctr = request.headers['ctr']
     mode = request.form.get('choice')
     if received_document:
         binary_data = received_document.read()
         decrypted_document = aes.decrypt(binary_data, mode)
-        response = send_file(io.BytesIO(decrypted_document), as_attachment=True, download_name=received_document.filename, mimetype='application/octet-stream')
+        filename = received_document.filename
+        filename = filename.replace('_encrypted', '')
+        response = send_file(io.BytesIO(decrypted_document), as_attachment=True,
+                             download_name= filename, mimetype='application/octet-stream')
         response.headers['mode'] = mode
         return response
 

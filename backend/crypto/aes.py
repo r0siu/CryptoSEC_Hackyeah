@@ -8,6 +8,7 @@ from Crypto.Util.Padding import pad
 from Crypto.Util.Padding import unpad
 from Crypto.Util import Counter
 
+
 class Aes(SymmetricInterface):
     def __init__(self):
         self.key = None
@@ -15,7 +16,7 @@ class Aes(SymmetricInterface):
     def generate_aes_key(self):
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
-            length=32, #bytes
+            length=32,  # bytes
             salt=b'1',
             iterations=480000,
         )
@@ -31,18 +32,18 @@ class Aes(SymmetricInterface):
             cipher = AES.new(self.key, AES.MODE_GCM)
             ciphertext, tag = cipher.encrypt_and_digest(data)
             IV = cipher.nonce
-            return ciphertext,  IV, tag
+            return {'ciphertext': ciphertext, 'iv': IV, 'tag': tag, 'ctr': None}
         elif mode == 'cbc':
             cipher = AES.new(self.key, AES.MODE_CBC)
             padded_data = pad(data, AES.block_size)
             ciphertext = cipher.encrypt(padded_data)
             IV = cipher.IV
-            return ciphertext, IV
+            return {'ciphertext': ciphertext, 'iv': IV, 'tag': None, 'ctr': None}
         elif mode == 'ecb':
             cipher = AES.new(self.key, AES.MODE_ECB)
             padded_data = pad(data, AES.block_size)
             ciphertext = cipher.encrypt(padded_data)
-            return ciphertext
+            return {'ciphertext': ciphertext, 'iv': None, 'tag': None, 'ctr': None}
         elif mode == 'ctr':
             iv = b'InitializationVt'
             ctr = Counter.new(128, initial_value=int.from_bytes(iv, byteorder='big'))
@@ -50,9 +51,9 @@ class Aes(SymmetricInterface):
             ciphertext = cipher.encrypt(data)
             # IV = b'InitializationVect'
             IV = cipher.nonce
-            return ciphertext, ctr
+            return {'ciphertext': ciphertext, 'iv': IV, 'tag': None, 'ctr': ctr}
 
-    def decrypt(self, ciphertext, mode, IV = None, tag=None ):
+    def decrypt(self, ciphertext, mode, IV=None, tag=None):
         if self.key == 0:
             return 0
         if mode == 'gcm':
