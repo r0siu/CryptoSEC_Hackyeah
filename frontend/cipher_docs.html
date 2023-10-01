@@ -17,21 +17,21 @@
     <label for="name">Plik do zaszyfrowania/deszyfrowania:</label>
     <br><input type="file" id="fileInput" name="file"><br><br>
         <label>Wybierz tryb pracy:</label><br>
-        <input type="radio" id="cipher" name="choice" value="cipher" checked required>
+        <input type="radio" id="cipher" name="smth_else" value="cipher" checked required>
         <label for="cipher">Szyfrowanie</label>
 
-        <input type="radio" id="decipher" name="choice" value="decipher">
+        <input type="radio" id="decipher" name="smth_else" value="decipher">
         <label for="decipher">Deszyfrowanie</label><br>
         <label>Wybierz tryb szyfrowania:</label>
-        <select id="cipher_type" name="cipher">
-            <option value="AES_GCM">AES_GCM</option>
-            <option value="AES_ECB">AES_ECB</option>
-            <option value="AES_CBC">AES_CBC</option>
-            <option value="AES_CT">AES_CT</option>
+        <select id="cipher_type" name="choice">
+            <option value="ecb">AES_ECB</option>
+            <option value="gcm">AES_GCM</option>
+            <option value="cbc">AES_CBC</option>
+            <option value="ctr">AES_CTR</option>
             <!-- Add more cipher options as needed -->
         </select><br><br>
-    <label for="name">Plik z kluczem prywatnym. Wymagane do deszyfracji, opcjonalne do szyfrowania</label>
-    <br><input type="file" id="privateKeyFile" name="file"><br><br>
+    <!-- <label for="name">Plik z kluczem prywatnym. Wymagane do deszyfracji, opcjonalne do szyfrowania</label>
+    <br><input type="file" id="privateKeyFile" name="file"><br><br>-->
     <button type="button" onclick="sendData()">Wyślij</button>
 </form>
 

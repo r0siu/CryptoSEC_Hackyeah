@@ -54,6 +54,7 @@ buttons.forEach(button => {
 function sendData() {
     const form = document.getElementById('pkcsForm');
     const formData = new FormData(form);
+    formData.append('choice', document.getElementById('types'))
 
     // Add a file to the form data (assuming you have an input with type="file" in your form)
     const fileInput = document.querySelector('input[type="file"]');
@@ -76,8 +77,14 @@ function sendData() {
     // Construct headers with JWT token
     const headers = new Headers();
     headers.append('Authorization', 'Bearer ' + token);
-
-    const apiUrl = 'http://127.0.0.1:5000/api/v1/document/encrypt';
+    const cipherRadio = document.getElementById('cipher');
+    const decipherRadio = document.getElementById('decipher');
+    console.log(cipherRadio.checked);
+    console.log(decipherRadio.checked);
+    if (cipherRadio.checked) {
+        apiUrl = 'http://127.0.0.1:5000/api/v1/document/encrypt';}
+    else if (decipherRadio.checked){
+        apiUrl = 'http://127.0.0.1:5000/api/v1/document/decrypt';}
 
      // Send a POST request to the REST API with form data and JWT token in headers
     fetch(apiUrl, {
@@ -101,7 +108,7 @@ function sendData() {
                 // Create a temporary <a> element to trigger the download
                 const a = document.createElement('a');
                 a.href = blobUrl;
-                a.download = 'downloaded_file.pdf'; // TODO: maybe fix filename
+                a.download = filename || 'downloaded_file.pdf'; // TODO: maybe fix filename
                 a.style.display = 'none';
                 document.body.appendChild(a);
 
