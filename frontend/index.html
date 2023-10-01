@@ -309,8 +309,9 @@ function sendPKCSRequest() {
         formData.append('file', fileInput.files[0]);
     }
 
-    const apiUrl = 'http://192.168.7.105:63343/api/v1/document/encrypt';
+    // const apiUrl = 'http://10.250.164.232:63343/api/v1/document/encrypt';
     // const apiUrl = 'https://httpbin.org/post';
+    const apiUrl = 'http://backend/api/v1/document/encrypt';
 
     // User authentication data
     // const user = document.getElementById('user').value;
@@ -326,6 +327,7 @@ function sendPKCSRequest() {
     headers.append('Authorization', 'Bearer ' + token);
 
     // Send a POST request to the REST API with form data and JWT token in headers
+     // Send a POST request to the REST API with form data and JWT token in headers
     fetch(apiUrl, {
         method: 'POST',
         body: formData,
@@ -334,7 +336,8 @@ function sendPKCSRequest() {
     .then(response => {
         // Check if the response contains a file attachment
         const contentDisposition = response.headers.get('Content-Disposition');
-        if (contentDisposition && contentDisposition.indexOf('file') !== -1) {
+        console.log(contentDisposition);
+        if (contentDisposition && contentDisposition.indexOf('attachment') !== -1) {
             // Extract the filename from the Content-Disposition header
             const filename = contentDisposition.split('filename=')[1].trim();
 
@@ -346,11 +349,13 @@ function sendPKCSRequest() {
                 // Create a temporary <a> element to trigger the download
                 const a = document.createElement('a');
                 a.href = blobUrl;
-                a.download = filename || 'downloaded_file';
+                a.download = 'downloaded_file.pdf'; // TODO: maybe fix filename
                 a.style.display = 'none';
                 document.body.appendChild(a);
 
                 // Trigger the download
+                console.log("Downloading a file: ");
+                console.log(filename);
                 a.click();
 
                 // Clean up
@@ -359,17 +364,17 @@ function sendPKCSRequest() {
             });
         } else {
             // Handle other types of responses here
-            return response.json();
+            // For example, you can parse response text or handle errors
+            return response.text().then(text => {
+                console.log("Sukcesowy zwrot ale nie pliku");
+            });
         }
-    })
-    .then(data => {
-        // Display the API response or handle it as needed
-        document.getElementById('response').innerHTML = JSON.stringify(data);
     })
     .catch(error => {
         console.error('Error:', error);
         document.getElementById('response').innerHTML = 'An error occurred.';
     });
+
 }
 </script>
 <script src="js/sidebars.js"></script></body>

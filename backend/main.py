@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, expose_headers=["Content-Disposition"])
 
 API_VERSION_PREFIX = '/api/v1'
 
@@ -30,7 +30,7 @@ def encrypt_document():
     if receivedDocument:
         receivedDocument.save(receivedDocument.filename)
         return send_file(receivedDocument.filename, as_attachment=True)
-
+    return jsonify({'message': 'Data received successfully', 'data': request.get_json()})
 
 @app.route(API_VERSION_PREFIX + DOCUMENT_RESOURCE + '/decrypt', methods=['POST'])
 def decrypt_document():
@@ -57,4 +57,4 @@ def verify_document():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=63343, debug=True)
