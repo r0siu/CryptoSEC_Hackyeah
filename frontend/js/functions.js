@@ -4,6 +4,7 @@
   const pageLinks = document.querySelectorAll('.nav-link');
   const contentContainer = document.getElementById('content');
 
+
   // Function to load content from a specific page
   function loadPageContent(pageName) {
     fetch(`${pageName}.html`)
@@ -13,6 +14,16 @@
               contentContainer.innerHTML = data;
             })
             .catch(error => console.error(error));
+  fetch('backend_link.json')
+    .then(response => response.json())
+    .then(data => {
+        const backendLink = data.backend_link;
+
+        // 'data' variable now contains the JSON content from the file
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
   }
 
   // Load base.html content by default
@@ -48,6 +59,7 @@ buttons.forEach(button => {
     button.addEventListener('click', handleClick);
 });
 
+
 function sendData() {
     const form = document.getElementById('pkcsForm');
     const formData = new FormData(form);
@@ -61,8 +73,6 @@ function sendData() {
         formData.append('files[]', files[i]);
     }
 
-    const apiUrl = 'http://127.0.0.1:5000/api/v1/document/encrypt';
-
     // User authentication data TODO: change this to actually use user & secret
     // const user = document.getElementById('user').value;
     // const secret = document.getElementById('secret').value;
@@ -75,6 +85,8 @@ function sendData() {
     // Construct headers with JWT token
     const headers = new Headers();
     headers.append('Authorization', 'Bearer ' + token);
+
+    const apiUrl = backendLink + '/api/v1/document/encrypt';
 
      // Send a POST request to the REST API with form data and JWT token in headers
     fetch(apiUrl, {
