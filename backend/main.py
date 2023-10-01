@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
-from backend.jwt.AuthenticationService import AuthenticationService
+from backend.auth.AuthenticationService import AuthenticationService
 
 
 app = Flask(__name__)
@@ -23,7 +23,7 @@ def login_user():
     password = data.get('password')
     jwt = authService.authenticate_user(username, password)
 
-    return jsonify({'jwt': jwt})
+    return jsonify({'auth': jwt})
 
 # endregion
 

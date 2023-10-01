@@ -10,5 +10,5 @@ class JWTGenerator:
         payload = {'id': user_id,
                    'perm': perm,
                    'exp': exp_time}
-        token = jwt.encode(payload, self.private_key)
+        token = jwt.encode(payload, self.private_key, algorithm='RS256')
         return token

@@ -1,6 +1,6 @@
 from backend.crypto.rsa import Rsa
-from backend.jwt.JWTGenerator import JWTGenerator
-from backend.jwt.JWTValidator import JWTValidator
+from backend.auth.JWTGenerator import JWTGenerator
+from backend.auth.JWTValidator import JWTValidator
 from backend.users.userRepository import UserRepository
 from datetime import datetime
 
@@ -9,8 +9,8 @@ class AuthenticationService:
     def __init__(self):
         rsa = Rsa("rsa instance")
         rsa.generate_key()
-        self._jwtGenerator = JWTGenerator(rsa.rsa_private_key)
-        self._jwtValidator = JWTValidator(rsa.rsa_public_key)
+        self._jwtGenerator = JWTGenerator(rsa.rsa_private_key_bytes)
+        self._jwtValidator = JWTValidator(rsa.rsa_public_key_bytes)
         self._userRepository = UserRepository()
         self._HALF_HOUR_IN_MS = 1_800_000
 

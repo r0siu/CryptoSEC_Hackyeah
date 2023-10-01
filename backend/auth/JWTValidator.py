@@ -8,7 +8,7 @@ class JWTValidator:
 
     def validate_token(self, token):
         try:
-            decoded = jwt.decode(token, self.__public_key, algorithms=["HS256"])
+            decoded = jwt.decode(token, self.__public_key, algorithms=["RS256"])
             self.__data = {}
             self.__extract_data(decoded)
             return Response.VALID
