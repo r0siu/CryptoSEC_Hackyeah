@@ -3,18 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funkcjonalność 3 - Weryfikacja i Walidacja</title>
+    <title>Weryfikacja i walidacja dokumentów</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
-<h1>Option 1 - PKCS Form</h1>
-<form id="pkcsForm">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br><br>
+<h1>Funkcjonalność 3</h1>
 
-    <button type="button" onclick="sendPKCSRequest()">Submit</button>
+<h2>Funkcjonalność weryfikacji i walidacji podpisu elektronicznego z użyciem certyfikatu X.509.</h2>
+<form id="pkcsForm">
+    <br>
+    <label for="name">Plik do weryfikacji i walidacji:</label>
+    <br><input type="file" id="fileInput" name="file"><br><br>
+
+    <button type="button" onclick="sendData()">Wyślij</button>
 </form>
 
 <div id="response"></div>
+
 
 </body>
 </html>
