@@ -3,18 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Funkcjonalność 2</title>
+    <title>Podpis dokumentów</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
-<h1>Option 1 - PKCS Form</h1>
-<form id="pkcsForm">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br><br>
+<h1>Funkcjonalność 2</h1>
 
-    <button type="button" onclick="sendPKCSRequest()">Submit</button>
+<h2>Funkcjonalność podpisywania dokumentów z użyciem elektronicznego podpisu kwalifikowanego i niekwalifikowanego (PAdES, XAdES, CAdES) dla certyfikatów klucza publicznego x.509, dla kluczy RSA i ECDSA.</h2>
+<form id="pkcsForm">
+    <br>
+    <label for="name">Nazwa:</label><input type="text" id="name" name="name" required><br><br>
+    <label for="name">Plik do podpisu/deszyfrowania:</label>
+    <br><input type="file" id="fileInput" name="file"><br><br>
+        <label>Wybierz typ podpisu skorelowany z Twoim kontem:</label><br>
+        <input type="radio" id="qualifiedSign" name="choice" value="qualifiedSign" checked required>
+        <label for="qualifiedSign">Podpis kwalifikowan</label>
+
+        <input type="radio" id="unqualifiedSign" name="choice" value="unqualifiedSign">
+        <label for="unqualifiedSign">Podpis niekwalifikowany</label><br>
+
+
+    <button type="button" onclick="sendData()">Wyślij</button>
 </form>
 
 <div id="response"></div>
+
 
 </body>
 </html>

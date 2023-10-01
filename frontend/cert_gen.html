@@ -3,18 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Option 1 - PKCS Form</title>
+    <title>Podpis dokumentów</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
-<h1>Option 1 - PKCS Form</h1>
-<form id="pkcsForm">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br><br>
+<h1>Funkcjonalność 4</h1>
 
-    <button type="button" onclick="sendPKCSRequest()">Submit</button>
+<h2>Funkcjonalność generowania kluczy (lub pary kluczy) dla kryptografii symetrycznej i asymetrycznej (co najmniej dla AES, RSA i ECDSA). Aplikacja jako parametry powinna przyjmować co najmniej rodzaj algorytmu, długość klucza, passphrase do klucza prywatnego.</h2>
+<form id="pkcsForm">
+    <br>
+    <h3>Dane do CSR zostaną wygenerowane na podstawie danych Twojego konta.</h3>
+    <label for="name">Nazwa:</label><input type="text" id="name" name="name" required><br>
+    <label for="keyLength">Długość klucza:</label><input type="number" id="keyLength" name="keyLength" required><br>
+    <label for="passphrase">Passphrase:</label><input type="text" id="passphrase" name="passphrase" required><br>
+        <label>Które klucze wygenerować?</label>
+        <select id="cipher_type" name="cipher">
+            <option value="AES">AES</option>
+            <option value="RSA">RSA</option>
+            <option value="ECDSA">ECDSA</option>
+            <!-- Add more cipher options as needed -->
+        </select><br><br>
+
+    <button type="button" onclick="sendData()">Wyślij</button>
 </form>
 
 <div id="response"></div>
+
 
 </body>
 </html>
