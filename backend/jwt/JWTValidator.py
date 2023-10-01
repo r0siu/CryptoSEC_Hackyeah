@@ -1,15 +1,14 @@
 import jwt
-from responseCode import Response
+from .responseCode import Response
 
 
-class CheckJWT:
-    def __init__(self, token):
-        self.__data = {}
-        self.__token = token
+class JWTValidator:
+    def __init__(self, public_key):
+        self.__public_key = public_key
 
-    def confirm_token(self, public_key, alg):
+    def validate_token(self, token):
         try:
-            decoded = jwt.decode(self.__token, public_key, algorithms=alg)
+            decoded = jwt.decode(token, self.__public_key, algorithms=["HS256"])
             self.__data = {}
             self.__extract_data(decoded)
             return Response.VALID

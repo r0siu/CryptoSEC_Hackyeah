@@ -1,6 +1,6 @@
 from enum import Enum
 
-
+# TODO: is this really needed?
 class PermJWT(Enum):
     ENCTYPT = 0b0001
     DECRYPT = 0b0010
