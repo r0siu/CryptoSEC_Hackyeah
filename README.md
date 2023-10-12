@@ -1,9 +1,1 @@
-# Przed pierwszym uruchomieniem:
-
-```manage.py makemigrate```
-
-```manage.py migrate```
-
-# Start aplikacji z konsoli:
-
-```manage.py runserver 8000```
+To start the docker app use: ./run.sh
